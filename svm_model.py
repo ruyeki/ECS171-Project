@@ -21,16 +21,6 @@ missing_values = data.isnull().sum()
 data.fillna(data.median(), inplace=True)
 data = data.drop_duplicates()
 
-
-for column in data.columns[1:]:  
-        df = data
-        Q1 = df[column].quantile(0.25)
-        Q3 = df[column].quantile(0.75)
-        IQR = Q3 - Q1
-        lower_limit = Q1 - 1.5 * IQR
-        upper_limit = Q3 + 1.5 * IQR
-        df[column] = df[column].clip(lower_limit, upper_limit)
-
 scaler = StandardScaler()
 scaled_features = scaler.fit_transform(data.drop(columns=['Bankrupt?']))
 scaled_df = pd.DataFrame(scaled_features, columns=data.columns[1:])
