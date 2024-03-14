@@ -12,12 +12,14 @@ except FileNotFoundError:
     print("File not found. Make sure the path to the pickled model is correct.")
 
 #the prediction using svm model
-def predict(input_data, svm_model):
+def predictor(input_data, svm_model):
+    
     prediction = svm_model.predict(input_data)
-    return prediction[0]
+    return prediction 
 
 # Streamlit app part of code
 def main():
+    
     #load the model into program
     with open('svm_model.pkl', 'rb') as model_file:
         svm_model = pickle.load(model_file)
@@ -68,31 +70,30 @@ def main():
 
     input_field21 = st.slider('Liability to Equity', min_value=0.0, max_value=1.0)
 
-    input_data = np.array([[input_field1, input_field2, input_field3, input_field4,input_field5, input_field6,input_field7, input_field8,input_field9, input_field10,input_field11, input_field12,input_field13, input_field14,input_field15, input_field16,input_field17, input_field18,input_field19, input_field20,input_field21]])  # Prepare input data for prediction
-    
-    st.write(input_data)
+    #the user inputted values in an array
+    input_data = np.array([[input_field1, input_field2, input_field3, input_field4,input_field5, input_field6,input_field7, input_field8,input_field9, input_field10,
+                            input_field11, input_field12,input_field13, input_field14,input_field15, input_field16,input_field17, input_field18,input_field19, 
+                            input_field20,input_field21]]) 
     
     #Make prediction once you hit the button
     if st.button('Prediction'):
         
-        prediction = predict(input_data, svm_model)
-        st.write("Prediction shape:", prediction.shape)
+        #make the prediction based off the values
+        prediction = predictor(input_data, svm_model)
         
-        if prediction == 1:
+        if prediction[0] == 1:
             
             #1 represents positive class, bankrupt
             st.write("The company will go bankrupt")
             
-        elif prediction == 0:
+        elif prediction[0] == 0:         
             
             #0 represents negative class, not bankrupt
             st.write("The company will not go bankrupt")
             
         else:
-            st.write("An error has occured")
-        
-        st.write(prediction)
-    
+            st.write ("An error has occured")
+
 
 
 if __name__ == '__main__':

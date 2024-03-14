@@ -2,8 +2,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 import pandas as pd
+import numpy as np
 import pickle
 
+#Training and saving a model
 
 #This chunk of code is just copy and paste from the ipynb file, just preprocessing the data all over again
 data = pd.read_csv('data.csv')
@@ -36,6 +38,5 @@ final_svc = SVC(C=0.3, class_weight='balanced', gamma=0.02, kernel='rbf')
 final_svc.fit(X_train, y_train)
 
 # Save the trained model to a file for use in streamlit
-with open('svm_model.pkl', 'wb') as model_file:
-    pickle.dump(final_svc, model_file)
+pickle.dump(final_svc, 'svm_model.pkl')
 
