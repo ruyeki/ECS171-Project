@@ -4,7 +4,6 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 from sklearn.svm import SVC
 import pickle
-
 try:
     with open('svm_model.pkl', 'rb') as model_file:
         svm_model = pickle.load(model_file)
